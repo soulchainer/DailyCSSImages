@@ -1,0 +1,11 @@
+# Dependencies & production folders
+**/dist
+**/node_modules
+
+# Logs
+**/npm-debug.log
+
+# Project image samples, screenshots & backup of used fonts
+**/*.gif
+**/*.png
+**/*.zip

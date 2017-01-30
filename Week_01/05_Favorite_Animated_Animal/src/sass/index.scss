@@ -1,0 +1,286 @@
+$black: #282828;
+$blue: #6580cc;
+$sky-purple: #7b7eb6;
+$pink: #d9879d;
+$purple: #694ca6;
+$white: #eee;
+
+* {
+  box-sizing: border-box;
+  position: relative;
+
+  &::after,
+  &::before {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+  }
+}
+
+body {
+  align-items: center;
+  background-image: linear-gradient(to bottom, $sky-purple, $pink);
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
+  min-height: 500px;
+  min-width: 800px;
+  overflow: hidden;
+  width: 100vw;
+}
+
+.cri-kee {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  right: 4rem;
+  height: 37.5rem;
+  width: auto;
+
+  &::before { /* left antenna */
+    border-radius: 100%;
+    border-right: .4rem solid $black;
+    height: 20rem;
+    right: 5rem;
+    top: calc(40% - 15rem);
+    width: 10rem;
+    z-index: -2;
+  }
+
+  &::after { /* right antenna */
+    border-radius: 100%;
+    border-right: .4rem solid $black;
+    height: 26rem;
+    right: -4rem;
+    top: calc(40% - 18rem);
+    transform: rotateZ(35deg);
+    width: 10rem;
+    z-index: -2;
+  }
+
+  .head {
+    background-color: $purple;
+    border-radius: 100%;
+    height: 8.5rem;
+    top: 40%;
+    transform: rotateZ(30deg);
+    width: 10rem;
+
+    %wrinkle {
+      background-color: $purple;
+      border: .15rem solid mix($purple, $black, 30%);
+      border-width: .15rem 0 0 0;
+      border-radius: 100%;
+    }
+
+    .eyes {
+      display: flex;
+      height: 60%;
+      justify-content: space-around;
+      left: 5%;
+      transform: rotateZ(10deg);
+      width: 100%;
+      z-index: 1;
+
+      %eye {
+        align-items: center;
+        background-color: $purple;
+        border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        width: 35%;
+
+        &::after { /* pupil */
+          background-color: $black;
+          border-radius: 100%;
+          height: 25%;
+          left: .55rem;
+          bottom: 12%;
+          transform: rotateZ(-10deg);
+          width: 20%;
+        }
+
+        &::before { /* eye white */
+          background-color: $white;
+          border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
+          height: calc(100% - 1em);
+          left: .5rem;
+          top: .8rem;
+          width: calc(100% - 1rem);
+        }
+      }
+
+      .left {
+        @extend %eye;
+        box-shadow: inset .2rem .4rem 0 -.05rem mix($purple, $black, 30%);
+
+        .eye-wrinkle {
+          @extend %wrinkle;
+          height: 1rem;
+          left: -.4rem;
+          top: 50%;
+          transform: rotateZ(20deg);
+          width: 60%;
+        }
+      }
+
+      .right {
+        @extend %eye;
+        box-shadow: inset -.2rem .4rem 0 -.05rem mix($purple, $black, 30%);
+
+        .eye-wrinkle {
+          @extend %wrinkle;
+          height: .6rem;
+          right: -.6rem;
+          top: 45%;
+          transform: rotateZ(-33deg);
+          width: 65%;
+        }
+      }
+    }
+
+    .face-wrinkles {
+      display: flex;
+      justify-content: center;
+      transform: rotateZ(15deg);
+      width: 50%;
+      z-index: 1;
+
+      &::before {
+        @extend %wrinkle;
+        height: .8rem;
+        left: 85%;
+        top: -.6rem;
+        width: 45%;
+      }
+
+      &::after {
+        @extend %wrinkle;
+        height: .6rem;
+        left: 95%;
+        top: -.2rem;
+        transform: rotateZ(-10deg);
+        width: 30%;
+      }
+    }
+
+    .mouth {
+      background-color: $purple;
+      border-radius: 90% 60% 60% 80%;
+      height: 7rem;
+      left: 5%;
+      overflow: hidden;
+      top: -38%;
+      transform: rotateZ(29deg) skew(-10deg);
+      width: 8.5rem;
+
+      .smile {
+        /* extra shape added to head */
+        background-color: transparent;
+        border-bottom: .2rem solid mix($purple, $black, 30%);
+        border-right: .2rem solid mix($purple, $black, 30%);
+        border-radius: 100% 80% 140% 100% / 0% 90% 100% 80%;
+        height: 68%;
+        left: 18%;
+        top: 24%;
+        transform: rotateZ(12deg) skew(-5deg);
+        width: 76%;
+
+        &::before { /* cut the smile */
+          background-color: $purple;
+          height: 100%;
+          left: -20%;
+          top: -34%;
+          transform: rotateZ(-30deg);
+          width: 110%;
+        }
+
+        .wrinkles {
+          &::before { /* right */
+            @extend %wrinkle;
+            background-color: transparent;
+            height: .8rem;
+            left: 93%;
+            top: .9rem;
+            transform: rotateZ(-65deg);
+            width: 18%;
+          }
+
+          &::after { /* left */
+            @extend %wrinkle;
+            background-color: transparent;
+            height: .8rem;
+            left: 7%;
+            top: 4rem;
+            transform: rotateZ(-65deg);
+            width: 15%;
+          }
+        }
+      }
+    }
+  }
+
+  .thorax {
+    background-image: radial-gradient(ellipse farthest-corner, $blue 0%, mix($blue, $black, 75%) 100%);
+    border: .2rem solid mix($blue, $black, 60%);
+    border-radius: 60% 60% 90% 60%/ 60% 60% 90% 90%;
+    height: 13rem;
+    left: .3rem;
+    overflow: hidden;
+    top: calc(40% - 2rem);
+    transform: rotateZ(-15deg);
+    width: 8.5rem;
+    z-index: -3;
+
+    %thorax-segment {
+      background-color: transparent;
+      border: .2rem solid mix($blue, $black, 60%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      height: 120%;
+    }
+
+    .segments { /* first thorax segment */
+      @extend %thorax-segment;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      left: -30%;
+      top: -80%;
+      transform: rotateZ(-50deg);
+      width: 200%;
+
+      &::after { /* second segment */
+        @extend %thorax-segment;
+        background-color: transparent;
+        left: -16%;
+        top: -2%;
+        transform: rotateZ(-130deg);
+        width: 90%;
+      }
+
+      &::before { /* third segment */
+        @extend %thorax-segment;
+        background-color: transparent;
+        left: -33%;
+        top: 4%;
+        transform: rotateZ(-130deg);
+        width: 90%;
+      }
+    }
+  }
+
+  .thorax-back {
+    background-color: $purple;
+    border-radius: 60% 60% 90% 60%/ 60% 60% 90% 90%;
+    height: 13rem;
+    left: .8rem;
+    overflow: hidden;
+    top: calc(40% - 2rem) - 13rem;
+    transform: rotateZ(-15deg);
+    width: 8.5rem;
+    z-index: -4;
+  }
+}

@@ -1,0 +1,261 @@
+$black: #282828;
+$dark-green: #6b8d1e;
+$grey: #b5a99b;
+$light-green: #eaea74;
+$light-grey: #e3d4c2;
+$orange: #ff9700;
+$pink: #e8809a;
+$sand: #ead6aa;
+$sky-blue: #9fd6ff;
+$white: #eee;
+
+* {
+  box-sizing: border-box;
+  position: relative;
+
+  &::after,
+  &::before {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+  }
+}
+
+body {
+  align-items: center;
+  background-color: $sky-blue;
+  display: flex;
+  height: 100vh;
+  min-height: 800px;
+  justify-content: center;
+  margin: 0;
+  width: 100vw;
+  min-width: 850px;
+}
+
+header {
+  background-color: transparentize($sky-blue, .2);
+  color: mix($sky-blue, $black, 30%);
+  display: flex;
+  font-family: 'Lobster', cursive;
+  font-size: 3rem;
+  justify-content: center;
+  padding: 1rem;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 10;
+}
+
+%iris-and-pupil {
+  border-radius: 100%;
+  position: absolute;
+  right: .3rem;
+  top: 30%;
+}
+
+%hair {
+  background-color: transparent;
+  border-color: $black;
+  border-style: solid;
+  border-width: 0 .4rem 0 0;
+  border-top-right-radius: 100%;
+  z-index: -1;
+}
+
+.horton {
+  align-items: center;
+  display: flex;
+  height: 40.625rem;
+  justify-content: center;
+  width: 37.5rem;
+
+  .head {
+    background-color: $grey;
+    border-radius: 20% 30% 50% 30%;
+    height: 70%;
+    width: 60%;
+
+    .hair {
+      @extend %hair;
+      height: 5rem;
+      left: calc(50% - 5rem);
+      position: absolute;
+      top: -4rem;
+      width: 5rem;
+
+      &::after {
+        @extend %hair;
+        height: 3rem;
+        left: 1.5rem;
+        top: 2rem;
+        transform: rotateZ(-15deg);
+        width: 3rem;
+      }
+
+      &::before {
+        @extend %hair;
+        height: 3rem;
+        left: 5.1rem;
+        top: 1.5rem;
+        transform: rotateZ(20deg) rotateY(180deg);
+        width: 3rem;
+      }
+    }
+
+    .eye {
+      background-color: $white;
+      border-radius: 100%;
+      height: 6.75rem;
+      position: absolute;
+      right: 10%;
+      top: 20%;
+      width: 6.25rem;
+
+      &::before { /* eyebrown */
+        background-color: transparentize($black, .1);
+        border-radius: .5rem;
+        height: 1rem;
+        top: -.5rem;
+        transform: rotateZ(5deg);
+        width: 90%;
+      }
+
+      .iris {
+        @extend %iris-and-pupil;
+        background-color: mix($sky-blue, $white, 70%);
+        height: 50%;
+        transform: rotateZ(10deg);
+        width: 30%;
+      }
+
+      .pupil {
+        @extend %iris-and-pupil;
+        background-color: $black;
+        height: 40%;
+        top: 15%;
+        transform: rotateZ(-8deg);
+        width: 30%;
+      }
+    }
+
+    %mouth {
+      border-bottom-left-radius: 100%;
+      height: 3rem;
+      width: 3rem;
+    }
+
+    .mouth {
+      @extend %mouth;
+      background-color: $black;
+      bottom: 4rem;
+      position: absolute;
+      right: 4rem;
+
+      &::before {
+        @extend %mouth;
+        background-color: $grey;
+        bottom: .4rem;
+        left: .6rem;
+      }
+    }
+  }
+
+  .ear {
+    background-color: $light-grey;
+    border: .8rem solid mix($grey, $white, 80%);
+    border-top-width: 0;
+    border-radius: 30%;
+    bottom: 20%;
+    height: 50%;
+    left: 10%;
+    position: absolute;
+    transform: rotateZ(10deg);
+    width: 40%;
+    z-index: 2;
+  }
+
+  .trunk {
+    background-color: $grey;
+    border-radius: 0% 20% 60% 60%;
+    height: 4.6rem;
+    position: absolute;
+    right: -7rem;
+    top: 20rem;
+    transform: rotateZ(-20deg) skew(-20deg);
+    width: 18rem;
+    z-index: 1;
+  }
+}
+
+.exotic-dandelion {
+  transform: scale(.3) translateY(-18rem);
+  display: flex;
+
+  .bubble {
+    background-color: $white;
+    border-radius: 1rem;
+    font-family: 'Architects Daughter', cursive;
+    font-size: 1.6rem;
+    height: 5rem;
+    left: 2rem;
+    padding: .2rem;
+    position: absolute;
+    text-align: center;
+    transform: scale(4) translateY(-7rem);
+    width: 10rem;
+
+    &::after {
+      border-bottom: 4rem solid transparent;
+      border-left: 1.8rem solid $white; border-right: 1.8rem solid transparent;
+      bottom: -2.8rem;
+      right: .3rem;
+      height: 0;
+      transform: rotateZ(20deg);
+      width: 0;
+      z-index: -1;
+    }
+  }
+
+  .stem {
+    background-image: repeating-linear-gradient(180deg, $dark-green, $dark-green 1rem, $light-green 1rem, $light-green 2rem);
+    border-radius: 100%;
+    height: 20rem;
+    width: 10rem;
+
+    &::after { /* the speck */
+      background-color: $sand;
+      border-radius: 100%;
+      height: .5rem;
+      right: 1.5rem;
+      top: -4.3rem;
+      width: .5rem;
+    }
+
+    &::before { /* dandelion head */
+      background-image: radial-gradient(ellipse farthest-corner, transparentize($pink, .2) 0%, mix(transparentize($pink, .2), $black, 90%) 100%);
+      border-radius: 100%;
+      filter: blur(2px);
+      height: 10rem;
+      right: -3rem;
+      top: -4rem;
+      width: 100%;
+      z-index: 2;
+    }
+
+    &-outliner {
+      background-color: $sky-blue;
+      border-radius: 100%;
+      height: 100%;
+      right: 1.6rem;
+      width: 100%;
+
+      &::before {
+        background-color: $sky-blue;
+        height: calc(25%);
+        right: -1.6rem;
+        width: 60%;
+      }
+    }
+  }
+}

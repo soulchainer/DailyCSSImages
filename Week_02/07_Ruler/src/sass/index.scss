@@ -1,0 +1,219 @@
+$black: #282828;
+$green: transparentize(#34a101, .2);
+$light-silver: #dadada;
+$orange: #ec6423;
+$silver: #bdbdbd;
+$white: #eee;
+$yellow: #eda900;
+
+
+
+
+
+* {
+  box-sizing: border-box;
+  position: relative;
+
+  &::after,
+  &::before {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+  }
+}
+
+body {
+  align-items: center;
+  background-color: $white;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
+  overflow: hidden;
+  width: 100vw;
+}
+
+.ruler-of-rules {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 90vmin;
+  justify-content: center;
+  width: 90vmin;
+}
+
+.carpenter-ruler-crown {
+  height: 33%;
+  left: 5%;
+  width: 80%;
+
+  %carpenter-ruler {
+    align-items: center;
+    background-color: $yellow;
+    border-radius: 10% 20% 5% / 5%;
+    box-shadow: .2vmin .1vmin 0 .1vmin mix($yellow, $black, 90%);
+    display: flex;
+    filter: blur(.1px);
+    height: 95%;
+    position: absolute;
+    width: 8%;
+
+    .ruler-union{
+      background-color: $light-silver;
+      border-radius: 100%;
+      box-shadow: .1vmin .1vmin 0 .1vmin $silver;
+      height: 1.5vmin;
+      left: calc(50% - 12.75%);
+      position: absolute;
+      top: 10%;
+      width: 1.5vmin;
+      z-index: 1;
+    }
+  }
+
+  %units-from-bottom {
+    background-image: repeating-linear-gradient(to top, transparent, transparent 4%, $yellow 4%, $yellow 20%);
+  }
+
+  %units-from-top {
+    background-image: repeating-linear-gradient(to bottom, transparent, transparent 4%, $yellow 4%, $yellow 20%);
+  }
+
+  .units {
+    background-image: repeating-linear-gradient(to top, transparent, transparent 3%, mix($black, $yellow, 40%) 3%, mix($black, $yellow, 40%) 4%);
+    height: 90%;
+    width: 50%;
+
+    &::after {
+      @extend %units-from-bottom; /* by default, units start from bottom */
+      height: 100%;
+      left: 50%;
+      width: 100%;
+    }
+  }
+
+  .ruler1 {
+    @extend %carpenter-ruler;
+    transform: rotateZ(25deg);
+    transform-origin: bottom;
+  }
+
+  .ruler2 {
+    @extend %carpenter-ruler;
+    transform: translateX(8.324vmin) translateY(-25.215vmin) rotateZ(-25deg) rotateX(180deg) rotateY(180deg);
+    transform-origin: bottom;
+    z-index: -1;
+
+    &::after {
+      @extend %units-from-top;
+    }
+  }
+
+  .ruler3 {
+    @extend %carpenter-ruler;
+    transform: translateX(16.648vmin) rotateZ(25deg);
+    transform-origin: bottom;
+    z-index: -2;
+  }
+
+  .ruler4 {
+    @extend %carpenter-ruler;
+    transform: translateX(24.9726vmin) translateY(-25.215vmin) rotateZ(-25deg) rotateX(180deg) rotateY(180deg);
+    transform-origin: bottom;
+    z-index: -3;
+
+    &::after {
+      @extend %units-from-top;
+    }
+  }
+
+  .ruler5 {
+    @extend %carpenter-ruler;
+    transform: translateX(33.2968vmin) rotateZ(25deg);
+    transform-origin: bottom;
+    z-index: -4;
+  }
+
+  .ruler6 {
+    @extend %carpenter-ruler;
+    transform: translateX(41.621vmin) translateY(-25.215vmin) rotateZ(-25deg) rotateX(180deg) rotateY(180deg);
+    transform-origin: bottom;
+    z-index: -5;
+
+    &::after {
+      @extend %units-from-top;
+    }
+  }
+
+  .ruler7 {
+    @extend %carpenter-ruler;
+    transform: translateX(56vmin) translateY(-1.6vmin) rotateZ(-90deg);
+    transform-origin: bottom;
+    z-index: -6;
+  }
+
+  .ruler8 {
+    @extend %carpenter-ruler;
+    transform: translateX(31.6vmin) translateY(-1.6vmin) rotateZ(-90deg);
+    transform-origin: bottom;
+    z-index: -7;
+  }
+}
+
+.set-square-eyes {
+  align-items: center;
+  display: flex;
+  height: 25%;
+  justify-content: center;
+  width: 100%;
+
+  %set-square {
+    align-items: center;
+    background-image: radial-gradient(ellipse farthest-corner, $green, mix($green, $black, 80%));
+    box-shadow: .2vmin .2vmin .4vmin .2vmin mix($green, $black, 50%);
+    clip-path: polygon(50% 0%, 0% 100%, 25% 100%, 25% 80%, 50% 30%, 75% 80%,  25% 80%, 25% 100%, 100% 100%, 50% 0%);
+    display: flex;
+    height: 70%;
+    justify-content: center;
+    width: 33%;
+  }
+
+  .set-square-left {
+    @extend %set-square;
+  }
+
+  .set-square-right {
+    @extend %set-square;
+  }
+}
+
+.ruler-moustache {
+  background-color: $orange;
+  border-radius: 0% 0% 5% 5%;
+  display: flex;
+  height: 10%;
+  justify-content: center;
+  width: 55%;
+
+  .units {
+    background-image: repeating-linear-gradient(to right, transparent, transparent 3%, mix($black, $orange, 40%) 3%, mix($black, $orange, 40%) 4%);
+    height: 50%;
+    width: 95%;
+
+    &::after { /* shape the unit-markers */
+      background-image: repeating-linear-gradient(to right, transparent, transparent 4%, $orange 4%, $orange 20%);
+      height: 100%;
+      top: 50%;
+      width: 100%;
+    }
+  }
+}
+
+.cartabon-mouth {
+  background-image: radial-gradient(ellipse farthest-corner, $black, darken($black, 5%));
+  clip-path: polygon(30% 0%, 0% 100%, 15% 100%, 15% 85%, 32.5% 25%, 75% 82.5%, 15% 80%, 15% 100%, 100% 100%, 30% 0%);
+  height: 15%;
+  left: 5%;
+  transform: translateY(4vmin) rotateX(180deg);
+  width: 40%;
+}

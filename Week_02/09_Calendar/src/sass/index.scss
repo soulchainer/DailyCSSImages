@@ -1,0 +1,571 @@
+$black: #282828;
+$grellow: #e1db9f;
+$grey-totoro: #737260;
+$deep-purple: #544053;
+$white: #eee;
+/* calendar colors */
+$back-background: #92c4f3;
+$red: #e6312a;
+$trimester1: #f6376c;
+$trimester2: #5cad35;
+$trimester3: #f67537;
+$trimester4: #2aafe6;
+
+
+
+
+
+* {
+  box-sizing: border-box;
+  position: relative;
+
+  &::after,
+  &::before {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+  }
+}
+
+@mixin size($h: 100%, $w: 100%) {
+  height: $h;
+  width: $w;
+}
+
+body {
+  @include size(100vh, 100vw);
+  align-items: center;
+  background-color: $back-background;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.almanac {
+  @include size(60vmin, 60vmin);
+  align-items: center;
+  background: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  perspective: 1000px;
+
+  &:hover {
+    .back-to-the-inmediate-future {
+      transform: rotateY(0deg);
+    }
+
+    .totoro-totoro {
+      transform: rotateY(-180deg);
+      .whiskers { /* for protunding whiskers visible in the back */
+        transform: translateZ(1vmin);
+      }
+    }
+  }
+}
+
+.flip-flap-flop {
+  @include size(100%, 68.5%);
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 1.6s ease;
+}
+
+%face {
+  backface-visibility: hidden;
+  border-radius: 2.4vmin;
+  left: 0;
+  transition: all 1.6s ease;
+  transform-style: preserve-3d;
+  position: absolute;
+  top: 0;
+}
+
+.back-to-the-inmediate-future {
+  @extend %face;
+  @include size;
+  align-items: center;
+  background-color: $grey-totoro;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
+  transform: rotateY(180deg);
+}
+
+.totoro-totoro {
+  @extend %face;
+  @include size;
+  background-color: currentcolor;
+  color: $grey-totoro;
+  transform: rotateY(0);
+  z-index:2;
+
+  .eyes {
+    align-items: center;
+    backface-visibility: hidden; /* Chrome - hide in the back */
+    display: flex;
+    height: 5.8vmin;
+    top: 25%;
+    z-index: 3;
+    %eye {
+      @include size(5.6vmin, 6.2vmin);
+      position: absolute;
+
+      .lachrymals {
+        @include size(5.6*.1vmin, 6.2*1.2vmin);
+        background-color: transparent;
+        border-radius: 100%;
+        box-shadow: 0 0 0 .3vmin $black;
+        left: -10%;
+        position: absolute;
+        top: calc(50% - 5%);
+        z-index: 1;
+      }
+
+      .eye {
+        @include size(5.6vmin, 6.2vmin);
+        background-color: $white;
+        box-shadow: 0 0 0 .3vmin $black;
+        border-radius: 100%;
+        z-index: 3;
+
+        &::before { /*pupil*/
+          @include size(2.8vmin, 2.8vmin);
+          background-color: $black;
+          border-radius: 100%;
+          left: 25%;
+          top: 30%;
+        }
+
+        &::after { /* sparkle */
+          @include size(.6vmin, .6vmin);
+          background-color: $white;
+          border-radius: 100%;
+          left: 33%;
+          top: 45%;
+        }
+      }
+    }
+
+    .left {
+      @extend %eye;
+      left: 22%;
+    }
+
+    .right {
+      @extend %eye;
+      right: 22%;
+    }
+  }
+
+  .nose {
+    @include size(2vmin, 6.3vmin);
+    background-color: $deep-purple;
+    border: .3vmin solid $black;
+    border-radius: 80%;
+    left: calc(50% - 3.15vmin);
+    position: absolute;
+    top: 30%;
+
+    &-tip {
+      @include size(1.2vmin, 2.6vmin);
+      background-color: $deep-purple;
+      border-radius: 50%;
+      bottom: -.6vmin;
+      box-shadow: 0 .2vmin 0 .1vmin $black;
+      left: calc(50% - 1.3vmin);
+    }
+
+    &::after { /* nostrils */
+      @include size(.8vmin, 1vmin);
+      background-color: $black;
+      border-radius: 100%;
+      box-shadow: 3.3vmin 0 0 0 $black;
+      left: .8vmin;
+      bottom: -.2vmin;
+    }
+
+    @function nose-stripes($n, $offset-x, $offset-y, $color: currentcolor) {
+      $stripes: ();
+      @for $i from 1 through $n {
+
+        $stripes: $stripes, $i*$offset-x ($i*$offset-y - $i*.06vmin) 0 0 $color;
+      }
+
+      @return $stripes;
+    }
+
+    &::before { /* stripes over the nose */
+      @include size(.8vmin, .3vmin);
+      background-color: currentcolor;
+      border-radius: 100%;
+      box-shadow: nose-stripes(4, (.3+.5)*1vmin, .8vmin);
+      color: $black;
+      top: -1.1vmin;
+      transform: rotateZ(-45deg);
+    }
+  }
+
+  %whisker {
+    @include size(2vmin, 14vmin);
+    border: .6vmin solid transparent;
+    border-top-color: currentcolor;
+    border-radius: 80%;
+    position: absolute;
+    transform-style: preserve-3d;
+  }
+
+  .whiskers {
+    color: mix($deep-purple, $black, 30%);
+    transform-style: preserve-3d;
+    /* for protunding whiskers visible in the back */
+    transform: translateZ(1vmin);
+
+    %root { /* whisker hairline */
+      @include size(.8vmin, .8vmin);
+      border-radius: 100%;
+      position: absolute;
+      top: -10%;
+    }
+
+    .left {
+      @extend %whisker;
+      left: -8vmin;
+      top: 16vmin;
+      transform-origin: right center;
+
+      .root {
+        @extend %root;
+        box-shadow: -.3vmin 0 0 .1vmin currentcolor;
+        right: -.8vmin;
+
+        &-before {
+          @extend %root;
+          box-shadow: -.3vmin 0 0 .1vmin currentcolor;
+          right: -3.2vmin;
+          top: -.8vmin;
+          transform: rotateZ(15deg);
+        }
+
+        &-after {
+          @extend %root;
+          box-shadow: -.3vmin 0 0 .1vmin currentcolor;
+          right: -3vmin;
+          top: 1.5vmin;
+          transform: rotateZ(-15deg);
+        }
+      }
+
+      &::before {
+        @extend %whisker;
+        left: 2vmin;
+        top: -3vmin;
+        transform: rotateZ(15deg);
+      }
+
+      &::after {
+        @extend %whisker;
+        left: 2vmin;
+        top: 3vmin;
+        transform: rotateZ(-15deg);
+      }
+    }
+
+    .right {
+      @extend %whisker;
+      right: -8vmin;
+      top: 16vmin;
+      transform-origin: left center;
+
+      .root {
+        @extend %root;
+        box-shadow: .3vmin 0 0 .1vmin currentcolor;
+        left: -.8vmin;
+
+        &-before {
+          @extend %root;
+          box-shadow: .3vmin 0 0 .1vmin currentcolor;
+          left: -3.2vmin;
+          top: -.8vmin;
+          transform: rotateZ(-15deg);
+        }
+
+        &-after {
+          @extend %root;
+          box-shadow: .3vmin 0 0 .1vmin currentcolor;
+          left: -3vmin;
+          top: 1.5vmin;
+          transform: rotateZ(15deg);
+        }
+      }
+
+      &::before {
+        @extend %whisker;
+        right: 2vmin;
+        top: -3vmin;
+        transform: rotateZ(-15deg);
+      }
+
+      &::after {
+        @extend %whisker;
+        right: 2vmin;
+        top: 3vmin;
+        transform: rotateZ(15deg);
+      }
+    }
+  }
+
+  .mouth {
+    @include size(14vmin, 14vmin);
+    backface-visibility: hidden; /* FF - hide it in the back */
+    background-color: $white;
+    border-radius: 100% 0;
+    box-shadow: 0 .1vmin 0 .4vmin $black;
+    left: calc(50% - 7vmin);
+    overflow: hidden;
+    transform: rotateZ(45deg) skew(-5deg, -5deg);
+    top: 25%;
+
+    /* tooth lines */
+    &::after {
+      @include size(220%, 62%);
+      border: .3vmin solid $black;
+      border-radius: 100%;
+      left: -5%;
+      top: -50%;
+      transform: rotateZ(134deg);
+    }
+
+    &::before {
+      @include size(300%, 85%);
+      border: .3vmin solid $black;
+      border-radius: 100%;
+      left: 25%;
+      top: -100%;
+      transform: rotateZ(135deg);
+    }
+
+    .last-tooth-line {
+      @include size(500%, 185%);
+      border: .3vmin solid $black;
+      border-radius: 100%;
+      left: -60%;
+      top: -135%;
+      transform: rotateZ(135deg);
+    }
+  }
+
+  .belly {
+    @include size(30%, 100%);
+    backface-visibility: hidden; /* FF - hide it in the back */
+    background-color: currentcolor;
+    bottom: 0;
+    border-radius: 0% 0% 2.4vmin 2.4vmin;
+    color: $grellow;
+    position: absolute;
+    transform-style: preserve-3d; /* Chrome - hide it in the back */
+
+    &::before { /* belly curve*/
+      @include size(90%, 100%);
+      backface-visibility: hidden; /* FF - hide it in the back */
+      background-color: currentcolor;
+      border-radius: 50% 50% 0 0;
+      transform-style: preserve-3d; /* Chrome - hide it in the back */
+      top: -45%;
+    }
+  }
+
+  %boomerang-side {
+    background-color: currentcolor;
+    border-radius: 100%;
+    color: $grey-totoro;
+  }
+
+  @mixin boomerang($height) { /* left side of the boomerang */
+    $b-height: $height;
+    $b-width: $b-height * .4;
+    @include size($b-height, $b-width);
+    @extend %boomerang-side;
+    backface-visibility: hidden;
+    transform: rotateZ(45deg);
+    transform-origin: top center;
+    transform-style: preserve-3d;
+
+    &::after { /* right side of the boomerang */
+      @extend %boomerang-side;
+      @include size(100%, 100%);
+      background-color: currentcolor;
+      backface-visibility: hidden;
+      transform: translateX(100%) translateY($b-width * -1) rotateZ(90deg);
+    }
+
+    &::before { /* bottom curve of the boomerang */
+      @include size($b-width * 1.25, $b-width * 1.25);
+      backface-visibility: hidden;
+      border: ($b-width * .75) solid transparent;
+      border-top-color: currentcolor;
+      border-radius: 100%;
+      box-sizing: content-box;
+      left: calc(#{$b-width * -1.195} + 50%);
+      top: $b-width;
+      transform: translateX($b-width * .95) translateY($b-width * -1) rotateZ(-39deg) skew(7deg, -7deg);
+    }
+  }
+
+  .boomerang-stripes {
+    align-items: center;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: -15%;
+    transform-style: preserve-3d;
+  }
+
+  .boomerang-row {
+    align-items: center;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: space-between;
+    transform-style: preserve-3d;
+    width: 100%;
+
+    &:first-child {
+      justify-content: space-between;
+      width: 30%;
+    }
+
+    &:nth-child(2) {
+      height: .18vmin;
+      width: 70%;
+    }
+
+    &:nth-child(3) {
+      align-items: flex-end;
+      height: 7.2vmin;
+      justify-content: center;
+      width: 100%;
+    }
+
+    &:nth-child(4) {
+      align-items: flex-end;
+      height: .9vmin;
+      width: 45%;
+    }
+
+    &:last-child {
+      align-items: flex-end;
+      height: 1.8vmin;
+      width: 80%;
+    }
+  }
+
+
+  /* first row */
+  .boomerang-stripe1 {
+    @include boomerang(4vmin);
+  }
+
+  .boomerang-stripe2 {
+    @include boomerang(5.5vmin);
+  }
+
+  .boomerang-stripe3 {
+    @include boomerang(5.5vmin);
+  }
+
+  .boomerang-stripe4 {
+    @include boomerang(4vmin);
+  }
+
+  /* second row */
+  .boomerang-stripe5 {
+    @include boomerang(3.5vmin);
+  }
+
+  .boomerang-stripe6 {
+    @include boomerang(4vmin);
+  }
+
+  .boomerang-stripe7 {
+    @include boomerang(6vmin);
+  }
+
+  .boomerang-stripe8 {
+    @include boomerang(4vmin);
+  }
+
+  .boomerang-stripe9 {
+    @include boomerang(3.5vmin);
+  }
+}
+
+.months {
+  align-items: center;
+  background-color: mix($grey-totoro, $white, 20%);
+  border-radius: 2%;
+  display: flex;
+  flex-wrap: wrap;
+  height: 80%;
+  justify-content: center;
+  top: 10%;
+  width: 90%;
+
+  &::before { /* year */
+    color: $grellow;
+    content: "2017";
+    font-size: 4vmin;
+    height: 10%;
+    top: -11%;
+  }
+
+  .month {
+    height: 20%;
+    margin: 0% 1% .5% 0%;
+    width: 30%;
+
+    &-row {
+      display: flex;
+      height: 14%;
+      text-align: center;
+      width: 100%;
+
+      &.month-name {
+        color: $white;
+        display: inline-block;
+        font-size: 1.25vmin;
+        font-weight: 700;
+        height: 1.5vmin;
+        line-height: 1.5vmin;
+      }
+
+      .day {
+        font-size: .9vmin;
+        font-weight: 700;
+        display: inline-block;
+        height: 1.2vmin;
+        line-height: 1.2vmin;
+        margin-right: .25vmin;
+        width: 14%;
+
+        &.festive {
+          color: $red;
+        }
+      }
+    }
+
+    %trimester {
+      color: $white;
+      font-weight: 700;
+    }
+
+    $trimester-color: (1: $trimester1, 2: $trimester2, 3: $trimester3, 4: $trimester4);
+
+    @for $i from 1 through 4 {
+      .trimester#{$i} {
+        background-color: map-get($trimester-color, $i);
+      }
+    }
+  }
+}

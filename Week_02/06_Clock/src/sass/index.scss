@@ -1,0 +1,320 @@
+$black: #282828;
+$gold: #bba031;
+$light-green: #dfe5c0;
+$light-silver: #dadada;
+$silver: #bdbdbd;
+$white: #eee;
+
+$shadow-text: .1vmin .2vmin .8vmin $black;
+
+
+
+
+
+* {
+  box-sizing: border-box;
+  position: relative;
+
+  &::after,
+  &::before {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+  }
+}
+
+body {
+  align-items: center;
+  background-color: $white;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
+  overflow: hidden;
+  width: 100vw;
+}
+
+.keiko-watch {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 80vmin;
+  justify-content: center;
+  width: 80vmin;
+
+  .case {
+    align-items: center;
+    background-image: linear-gradient(-45deg, $silver, $light-silver 70%);
+    border-radius: 100%;
+    box-shadow: inset -4px -8px 32px 8px mix($silver, $black, 90%), .5vmin .25vmin 0 .125vmin mix($silver, $black, 80%);
+    display: flex;
+    height: 62.5%;
+    justify-content: center;
+    width: 62.5%;
+
+    &::before { /* crown */
+      $crown-line: transparentize(mix($silver, $black, 80%), .2);
+      background-image: linear-gradient(to bottom, $light-silver, $light-silver 1vmin,  $silver 1vmin, $crown-line 1.25vmin, $light-silver 1.5vmin, $light-silver 1.75vmin, $silver 1.75vmin, $crown-line 2vmin, $light-silver 2vmin, $light-silver 2.25vmin, $silver 2.25vmin, $crown-line 2.5vmin, $light-silver 2.5vmin, $light-silver 2.75vmin, $silver 2.75vmin, $crown-line 3.25vmin, $light-silver 3.25vmin, $light-silver 3.5vmin, $silver 3.5vmin, $crown-line 3.75vmin, $light-silver 3.75vmin, $light-silver 4vmin, $silver 4vmin, $crown-line 4.25vmin, $light-silver 4.25vmin, $light-silver 4.5vmin, $silver 4.5vmin, $crown-line 4.75vmin, $light-silver 4.75vmin);
+      border-radius: 0 1vmin 1vmin 0;
+      box-shadow: 0 0 0 .1vmin $silver, .2vmin -.2vmin .1vmin .1vmin transparentize(mix($silver, $black, 50%), .2);
+      height: 6vmin;
+      mix-blend-mode: darken;
+      right: -2.9vmin;
+      top: calc(50% - 3vmin);
+      width: 2.5vmin;
+    }
+
+    .bezel {
+      align-items: center;
+      background-color: $white;
+      border: 1vmin solid $black;
+      border-radius: 100%;
+      display: flex;
+      height: 85%;
+      justify-content: center;
+      width: 85%;
+
+      &::before { /* case triangle */
+        border-left: 1.5vmin solid transparent; border-right: 1.5vmin solid transparent; border-top: 2vmin solid $black;
+        height: 0;
+        top: -3.5vmin;
+        width: 0;
+      }
+
+      .crystal {
+        align-items: center;
+        background-color: transparentize($white, .98);
+        border-radius: 100%;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        width: 100%;
+        z-index: 10;
+      }
+
+      .dial {
+        $dial-diameter: calc(100% - .5vmin);
+        background-color: mix($black, $white, 80%);
+        border-radius: 100%;
+        box-shadow: inset 2vmin 1vmin 20vmin 10vmin transparentize($black, .5),
+        inset 0 -5vmin 10vmin 5vmin transparentize(darken($black, 2%), .25),
+        inset 0 5vmin 10vmin 5vmin transparentize($silver, .3),
+        inset -5vmin -4vmin 18vmin 5vmin transparentize($silver, .3);
+        height: $dial-diameter;
+        overflow: hidden;
+        width: $dial-diameter;
+
+        &::before { /* logo */
+          color: $silver;
+          content: "KEIKO";
+          font-family: 'Domine', serif;
+          font-size: 2.5vmin;
+          font-weight: 700;
+          text-align: center;
+          text-shadow: $shadow-text;
+          top: 25%;
+          width: 100%;
+        }
+
+        .hands {
+          height: 50%;
+          width: 80%;
+
+          %hand-shadow {
+            box-shadow: .2vmin .2vmin .4vmin .2vmin transparentize($black, .6);
+          }
+
+          %triangular-hand {
+            @extend %hand-animation;
+            animation-name: clock-hand;
+            left: calc(50% - 6.5% / 2);
+            position: absolute;
+            transform-origin: bottom;
+            width: 6.5%;
+
+            .hand {
+              background-color: $light-green;
+              clip-path: polygon(15% 100%, 0 40%, 50% 0, 100% 40%, 85% 100%);
+              height: 80%;
+              top: -1.3vmin;
+            }
+
+            .hand-union { /* hand union to shaft ring */
+              @extend %hand-shadow;
+              background-color: $black;
+              height: calc(20% + 1.3vmin);
+              left: 20%;
+              top: -1.3vmin;
+              width: 60%;
+            }
+          }
+          .hours {
+            @extend %triangular-hand;
+            animation-duration: 1080s; /* 43200s */
+            height: calc(40% - 1.3vmin);
+            bottom: 50%;
+          }
+
+          .minutes {
+            @extend %triangular-hand;
+            animation-duration: 90s; /* 3600s */
+            bottom: 50%;
+            height: calc(60% - 1.3vmin);
+            z-index: 2;
+          }
+
+          .seconds {
+            @extend %hand-animation;
+            @extend %hand-shadow;
+            animation-name: clock-seconds-hand;
+            animation-duration: 15s; /* 60s */
+            background-color: $white;
+            bottom: 25%;
+            height: 105%;
+            left: calc(50% - 2.5% / 2);
+            position: absolute;
+            transform-origin: 1.25% 76.25%;
+            width: 2.5%;
+            z-index: 3;
+
+            &::before { /* circle end of hand */
+              @extend %hand-shadow;
+              background-color: transparent;
+              border-radius: 100%;
+              border: .4vmin solid $white;
+              border-width: .5vmin .4vmin;
+              height: 2vmin;
+              left: calc(50% - 1vmin);
+              bottom: -1.9vmin;
+              width: 2vmin;
+            }
+
+          }
+
+          .shaft-ring {
+            background-color: $black;
+            border-radius: 100%;
+            height: 2.6vmin;
+            left: calc(50% - 1.3vmin);
+            top: calc(50% - 1.3vmin);
+            width: 2.6vmin;
+
+            &-inner { /* inner shaft-ring (seconds) */
+              background-color: $gold;
+              border: .7vmin solid $white;
+              border-radius: 100%;
+              height: 2vmin;
+              left: .3vmin;
+              position: absolute;
+              top: .3vmin;
+              width: 2vmin;
+              z-index: 4;
+            }
+          }
+        }
+
+        .marker {
+          background-image: linear-gradient(to bottom, $white, $white 4%, transparent 5%, transparent 95%, $white 96%);
+          height: 102%;
+          left: 49.6%;
+          position: absolute;
+          top: -1%;
+          width: .8%;
+        }
+
+        @for $i from 1 through 60 {
+          .minute#{$i} {
+            transform: rotateZ(6deg * $i);
+
+            @if $i == 30 {
+              transform: translateX(-33%) rotateZ(6deg * $i);
+            }
+
+            @if $i == 60 {
+              transform: translateX(-33%) rotateZ(6deg * $i);
+            }
+          }
+        }
+
+        .marker-big {
+          background-image: linear-gradient(to bottom, $light-silver, $light-silver 2%, $light-green 2%, $light-green 10%, transparent 11%, transparent 89%, $light-green 90%, $light-green 98%, $light-silver 98%);
+          width: 4%;
+        }
+
+        .half,
+        .quarter {
+          background-image: linear-gradient(to bottom, $light-silver, $light-silver 2%, $light-green 2%, $light-green 6%, transparent 7%, transparent 93%, $light-green 94%, $light-green 98%, $light-silver 98%);
+        }
+
+        .five {
+          clip-path: polygon(0 100%, 30% 90%, 30% 10%, 0 0, 100% 0, 70% 10%, 70% 90%, 100% 100%)
+        }
+
+        %dial-number {
+          color: $white;
+          font-family: 'Syncopate', sans-serif;
+          font-size: 7vmin;
+          font-weight: 700;
+          text-shadow: $shadow-text;
+        }
+
+        %horizontal-number {
+          text-align: center;
+          width: 100%;
+        }
+
+        %vertical-number {
+          top: calc(50% - 3.5vmin);
+          width: 7vmin;
+        }
+
+        .marker-number {
+          @extend %dial-number;
+          position: absolute;
+
+          &-top {
+            @extend %horizontal-number;
+            top: 2.2vmin;
+          }
+
+          &-bottom {
+            @extend %horizontal-number;
+            bottom: 1.4vmin;
+          }
+
+          &-left {
+            @extend %vertical-number;
+            left: 3vmin;
+          }
+
+          &-right {
+            @extend %vertical-number;
+            right: .2vmin;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Animation */
+
+%hand-animation {
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes clock-hand {
+  25% { transform: rotateZ(90deg); }
+  50% { transform: rotateZ(180deg); }
+  75% { transform: rotateZ(270deg); }
+  100% { transform: rotateZ(360deg);}
+}
+
+@keyframes clock-seconds-hand {
+  25% { transform: translate(0, -1.25%)  rotateZ(90deg); }
+  50% { transform: translate(100%, 0) rotateZ(180deg); }
+  75% { transform: translate(0, 1.25%) rotateZ(270deg); }
+  100% { transform: translate(0, 0) rotateZ(360deg);}
+}

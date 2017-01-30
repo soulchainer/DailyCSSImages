@@ -1,0 +1,133 @@
+$amber: #ffc14a;
+$black: #282828;
+$blue: #87ceeb;
+$red: #d91a1d;
+$white: #eee;
+$wood: #f0c785;
+
+
+
+
+
+* {
+  box-sizing: border-box;
+  position: relative;
+
+  &::after,
+  &::before {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+  }
+}
+
+html {
+  align-items: center;
+  background-color: $blue;
+  display: flex;
+  justify-content: center;
+
+  &::before {
+    background-color: $wood;
+    background-image:
+    /* pencil lead */
+    linear-gradient(to right, transparent, transparent 96%, $black 96%),
+    /* wood vertical gradient */
+    linear-gradient(to bottom, mix($wood, $black, 75%), $wood 30%, $wood 70%, mix($wood, $black, 75%) 100%),
+    /* wood horizontal gradient */
+    radial-gradient(ellipse farthest-corner, $wood, mix($wood, $black, 80%));
+    border-radius: 5% 0 0 5%;
+    clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
+    height: 5vmin;
+    top: 10vmin;
+    width: 50vmin;
+  }
+
+  &::after {
+    color: darken($wood, 60%);
+    content: "clIcKEA";
+    font-family: 'Paytone One', sans-serif;
+    font-size: 2.4vmin;
+    left: calc(50% - 15vmin);
+    line-height: 5vmin;
+    text-shadow: 0px 1px 1px mix($wood, $white, 50%), 0 -1px 1px $black;
+    top: 10vmin;
+  }
+}
+
+@function repeat-shadows-vertically($n, $distance, $translate-x: 0, $translate-y: 0, $color: currentcolor) {
+  $shadows: ();
+  $offset-y: 0 + $translate-y;
+  @for $i from 1 through $n {
+    $offset-y: $offset-y + $distance;
+    $shadows: $shadows, $translate-x $offset-y 0 0 $color;
+  }
+
+  @return $shadows;
+}
+
+body { /* pencil :D */
+  display: flex;
+  font-weight: bold;
+  justify-content: center;
+
+  &::after { /* notepad rings */
+    background-color: currentcolor;
+    border-radius: 40%;
+    box-shadow: repeat-shadows-vertically(13, (1.4 + 2)*1vmin);
+    color: $amber;
+    height: 1.4vmin;
+    top: 28.5vmin;
+    width: 6vmin;
+  }
+
+  &::before { /* holes */
+    background-color: currentcolor;
+    border-radius: 100%;
+    box-shadow:
+    /* paper holes */
+    repeat-shadows-vertically(13, (1.4 + 2)*1vmin),
+    /* cover holes */
+    repeat-shadows-vertically(14, (1.4 + 2)*1vmin, (6 - .5)*-1vmin,(1.4 + 2)*-1vmin, $blue);
+    color: mix($white, $black, 90%);
+    height: 1.5vmin;
+    left: calc(50% + 3vmin - 1vmin);
+    top: 28.5vmin;
+    width: 1.5vmin;
+  }
+}
+
+%face {
+  height: 50vmin;
+  top: 25vmin;
+  width: 40vmin;
+}
+
+.notepad {
+  position: absolute;
+  z-index: -1;
+  &::before { /* cover */
+    @extend %face;
+    background-image: linear-gradient(to bottom, mix($red, $white, 90%), $red 90%, mix($red, $black, 90%));
+    border-radius: 5% 1% 1% 5%;
+    left: -40.5vmin;
+    transform: translateY(2.4vmin);
+  }
+
+  &::after { /* the paper */
+    @extend %face;
+    background-color: $white;
+    /* page lines */
+    background-image: linear-gradient(to bottom, $white, $white 4vmin, transparent 4vmin, transparent 48vmin, $white 48vmin),
+    linear-gradient(to right, $white, $white 4vmin, transparent 4vmin),
+    linear-gradient(to left, $white, $white 3vmin, transparent 3vmin), repeating-linear-gradient(to bottom, transparent, transparent 4vmin, mix($red, $white, 80%) 4vmin, mix($red, $white, 80%) 4.2vmin);
+    border-radius: 1% 5% 5% 1%;
+    box-shadow: .4vmin .2vmin 0 .2vmin mix($white, $black, 90%), 1.4vmin 1.6vmin 0 .2vmin transparentize($black, .4);
+    content: "#dailycssimages (~*3*)~";
+    font-family: 'Pacifico', cursive;
+    font-size: 2.2vmin;
+    padding: 1.1vmin 4vmin;
+    right: -40.5vmin;
+    word-break: break-all;
+  }
+}

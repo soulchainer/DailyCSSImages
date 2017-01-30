@@ -1,0 +1,232 @@
+$black: #282828;
+$blue: #87d1ff;
+$blue-shadow: mix($blue, $black, 85%);
+$chocolate: #7e5955;
+$cookie: #dfa577;
+$pink: #ff84cb;
+$white: #eee;
+$wood: #cf432d;
+$yellow: #f7c247;
+
+
+
+
+
+* {
+  box-sizing: border-box;
+  position: relative;
+
+  &::after,
+  &::before {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+  }
+}
+
+@mixin size($w: 100%, $h: 100%) {
+  height: $h;
+  width: $w;
+}
+
+body {
+  @include size(100vw, 100vh);
+  align-items: center;
+  background-color: $blue;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.grandma-cake {
+  @include size(50vmin, 50vmin);
+  color: $yellow;
+}
+
+.top {
+  @include size(70.05%, 9.99%);
+  background-color: mix($chocolate, $white, 80%);
+  position: absolute;
+  top: 30.2%;
+  transform: rotateX(10deg) skew(-56.5deg);
+  transform-origin: bottom center;
+}
+
+.side {
+  @include size(62%, 40%);
+  color: mix($yellow, $white, 80%);
+  background-color: currentcolor;
+  background-image: linear-gradient(to bottom, mix($chocolate, $white, 80%) 15%, mix($cookie, $white, 80%) 15%, $cookie 25%, currentcolor 25%, currentcolor 65%, mix($cookie, $white, 80%) 65%, mix($cookie, $white, 80%) 72.5%, mix($chocolate, $white, 80%) 72.5%, mix($chocolate, $white, 80%) 92.5%, mix($cookie, $white, 80%) 92.5%);
+  left: 70%;
+  position: absolute;
+  top: 40%;
+  transform: rotateY(75.95deg) skewY(-9deg);
+  transform-origin: left center;
+}
+
+.front {
+  @include size(70%, 40%);
+  align-items: center;
+  background-color: currentcolor;
+  background-image: linear-gradient(to bottom, $chocolate 15%, $cookie 15%, $cookie 25%, currentcolor 25%, currentcolor 65%, $cookie 65%, $cookie 72.5%, $chocolate 72.5%, $chocolate 92.5%, $cookie 92.5%);
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+
+  &::after { /* shadow */
+    @include size(100%, 36.5%);
+    background-image: linear-gradient(to right, mix($blue-shadow, $black, 90%), $blue-shadow);
+    border-radius: 0 0 2vmin .5vmin;
+    bottom: -36.5%;
+    left: 0;
+    transform: skewX(-70deg);
+    transform-origin: top center;
+  }
+
+  &::before { /* side shadow */
+    @include size(216.4%, 16%);
+    background-image: linear-gradient(to bottom, mix($blue-shadow, $black, 85%), mix($blue-shadow, $black, 90%));
+    border-radius: 100% 0 0 40%;
+    bottom: -40.1%;
+    left: -56.05%;
+    transform: rotateY(75deg) skewY(-5.5deg);
+    transform-origin: left center;
+  }
+}
+
+.face {
+  @include size(30%, 40%);
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.glasses {
+  @include size($h: 40%);
+  align-items: center;
+  color: $pink;
+  display: flex;
+  justify-content: center;
+
+  %eye-wire {
+    @include size($w: 40%);
+    background-color: transparentize($white, .6);
+    box-shadow: 0 0 0 .6vmin $pink, 0 0 0 .9vmin mix($pink, $black, 80%);
+    z-index: 1;
+
+    &::before { /* eye */
+      @include size(1.4vmin, 1.4vmin);
+      background-color: $black;
+      border-radius: 100%;
+      top: calc(50% - .7vmin);
+    }
+  }
+
+  .left {
+    @extend %eye-wire;
+    border-radius: 20% 100% 40% 100%;
+
+    &::before {
+      right: .6vmin;
+    }
+  }
+
+  .bridge {
+    @include size(20%, 20%);
+    background-color: currentcolor;
+    border: .2vmin solid mix($pink, $black, 80%);
+    border-width: .2vmin 0;
+    box-sizing: content-box;
+    top: 20%;
+  }
+
+  .right {
+    @extend %eye-wire;
+    border-radius: 100% 20% 100% 40%;
+
+    &::before {
+      left: .6vmin;
+    }
+  }
+}
+
+.smile {
+  @include size(18%, 20%);
+  border: .6vmin solid $black;
+  border-top-color: transparent;
+  border-radius: 100%;
+}
+
+%arm {
+  background-color: currentcolor;
+  border-radius: 1vmin;
+  color: $black;
+  display: flex;
+  justify-content: center;
+  transform-origin: bottom center;
+
+  &::before { /* hand */
+    @include size(3vmin, 3vmin);
+    background-color: currentcolor;
+    border-radius: 100%;
+    left: -1.25vmin;
+    top: -1.5vmin;
+  }
+}
+
+.left-arm {
+  @extend %arm;
+  @include size(1vmin, 40%);
+  animation: 1.5s infinite ease-in forwards alternate left-arm;
+  left: 10%;
+  top: 30%;
+  transform: rotateZ(-30deg);
+}
+
+.right-arm {
+  @extend %arm;
+  @include size(1vmin, 30%);
+  animation: .4s infinite ease-in-out forwards alternate right-arm;
+  position: absolute;
+  right: 20%;
+  top: 25%;
+  transform: rotateZ(30deg);
+
+  .cane {
+    @include size(1.5vmin, 100%);
+    background-color: $wood;
+    left: -1.5vmin;
+    position: absolute;
+    top: calc(-100% - 1vmin);
+
+    &::before { /* cane handle */
+      @include size(6vmin, 6vmin);
+      border: 1.5vmin solid $wood;
+      border-color: transparent $wood $wood transparent;
+      border-radius: 100%;
+      bottom: -2.9vmin;
+      transform: rotateZ(45deg);
+    }
+
+    &::after { /* cane rubber cover */
+      @include size(1.5vmin, 1.5vmin);
+      background-color: $black;
+      border-radius: 1.5vmin 1.5vmin 0 0;
+      /* for the curved start of the handle */
+      box-shadow: 4.5vmin (50*.3vmin - .75vmin) 0 0 $wood;
+      top: -.75vmin;
+    }
+  }
+}
+
+/* Animation */
+
+@keyframes left-arm {
+  to { transform: rotateZ(-35deg); }
+}
+
+@keyframes right-arm {
+  to { transform: rotateZ(35deg); }
+}
