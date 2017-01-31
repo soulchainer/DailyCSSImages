@@ -1,0 +1,390 @@
+$black: #282828;
+$dark-purple: #361d2e;
+$electric-blue: #2c75ff;
+$gold: #ac7906;
+$grey: #cbc0ad;
+$pink: #ef7d94;
+$white: #eee;
+$yellow: #e3ba59;
+
+
+
+
+
+* {
+  box-sizing: border-box;
+  position: relative;
+
+  &::after,
+  &::before {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+  }
+}
+
+@mixin size($w: 100%, $h: 100%) {
+  height: $h;
+  width: $w;
+}
+
+body {
+  @include size(100vw, 100vh);
+  align-items: center;
+  background-color: $dark-purple;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.frank-einstein-monster {
+  @include size(50vmin, 50vmin);
+  align-items: center;
+  color: $yellow;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.head {
+  @include size(40vmin);
+  animation: 8s ease-in-out infinite levitate;
+  background-image: radial-gradient(ellipse farthest-corner, currentColor, mix($yellow, $black, 90%) );
+  border-radius: 1vmin;
+
+  %side-hair {
+    @include size(8%);
+    background-color: currentColor;
+  }
+
+  &>.hair {
+    @include size($h: 40%);
+    border-top: 1.4vmin solid $white;
+    border-radius: 1vmin 1vmin 0 0;
+    color: $white;
+    position: absolute;
+
+    &::after { /* left side hair */
+      @extend %side-hair;
+      border-bottom-right-radius: 80%;
+    }
+
+    &::before { /* right side hair */
+      @extend %side-hair;
+      border-bottom-left-radius: 80%;
+      right: 0;
+    }
+
+    .bangs {
+      @include size(50%, 200%);
+      background-color: currentColor;
+      clip-path: polygon(0% 0%, 5% 10%, 10% 3%, 14% 13%, 21% 2%, 22% 27%, 30% 2%, 38% 29%, 43% 2%, 48% 16%, 52% 3%, 54% 22%, 57% 3%, 62% 9%, 66% 1%, 72% 20%, 73% 2%, 79% 9%, 80% 3%, 86% 13%, 89% 3%, 93% 10%, 99% 0%);
+      left: calc(50% - 25%);
+      position: absolute;
+    }
+  }
+}
+
+.staples {
+  @include size($h: 12%);
+  position: absolute;
+
+  .staple {
+    background-image: linear-gradient(to right, $gold, lighten($gold, 5%), $gold);
+    clip-path: polygon(0% 0%, 8% 100%, 83% 100%, 100% 0%);
+    position: absolute;
+
+    &1 {
+      @include size(8%);
+      left: 9%;
+    }
+
+    &2 {
+      @include size(4%, 60%);
+      left: 21%;
+    }
+
+    &3 {
+      @include size(6%, 90%);
+      right: 8%;
+    }
+
+    &4 {
+      @include size(5%, 80%);
+      right: 20%;
+    }
+  }
+}
+
+@function repeat-stitches($n, $offset-y, $color) {
+  $stitches: ();
+  @for $i from 1 through $n {
+    $stitches: $stitches, 0 $offset-y*$i 0 0 $color;
+  }
+
+  @return $stitches;
+}
+
+.scar {
+  @include size(.4vmin, 15%);
+  background-color: darken($yellow, 50%);
+  border-radius: 100%;
+  left: 18%;
+  position: absolute;
+  top: 12%;
+  transform: rotateZ(-30deg);
+
+  &::before { /* stitches */
+    @include size(550%, .3vmin);
+    background-color: $white;
+    box-shadow: repeat-stitches(4, 1.5vmin, $white);
+    left: calc(-275% + .2vmin);
+    top: 10%;
+  }
+}
+
+.eyes {
+  @include size(100%, 6vmin);
+  position: absolute;
+  top: 35%;
+
+  %eye {
+    @include size(6vmin);
+    background-color: $white;
+    border: .4vmin solid $black;
+    border-radius: 100%;
+    position: absolute;
+
+    &::after { /* eyebrown */
+      @include size(120%, 40%);
+      background-color: transparentize($black, .1);
+      filter: blur(.1px);
+      top: -60%;
+    }
+
+    &::before { /* pupil */
+      @include size(25%, 25%);
+      background-color: $black;
+      border-radius: 100%;
+      left: calc(50% - 12.5%);
+      top: calc(50% - 12.5%);
+    }
+  }
+
+  .left {
+    @extend %eye;
+    left: calc(33% - 3vmin);
+    
+    &::after {
+      animation: 14s ease-in-out 2.4s infinite eyebrowns-game-left;
+      transform: skew(-10deg) rotateZ(-10deg) translateX(-20%);
+    }
+  }
+  .right {
+    @extend %eye;
+    right: calc(33% - 3vmin);
+
+    &::after {
+      animation: 14s ease-in-out 2.4s infinite eyebrowns-game-right;
+      transform: skew(10deg) rotateZ(10deg) translateX(10%);
+    }
+  }
+}
+
+.ears {
+  @include size(118%, 22%);
+  background-image: radial-gradient(ellipse farthest-corner, currentColor, mix($yellow, $black, 90%) );
+  border-radius: 4vmin 3vmin 5vmin 4vmin;
+  left: -9%;
+  mix-blend-mode: color;
+  position: absolute;
+  top: 40%;
+  z-index: -1;
+
+  &::before { /* left inner ear */
+    @include size(6%, 60%);
+    background-color: transparentize(mix($yellow, $black, 50%), .6);
+    border-radius: 100%;
+    left: 2%;
+    top: 20%;
+    transform: rotateZ(-8deg);
+  }
+
+  &::after { /* right inner ear */
+    @include size(6%, 60%);
+    background-color: transparentize(mix($yellow, $black, 50%), .6);
+    border-radius: 100%;
+    right: 2%;
+    top: 20%;
+    transform: rotateZ(8deg);
+  }
+}
+
+.nose {
+  @include size(26%, 25%);
+  background-color: $yellow;
+  border-top-color: transparent;
+  border-radius: 100%;
+  box-shadow: inset .6vmin -.6vmin .2vmin 0 mix($yellow, $black, 50%), inset -.6vmin -.6vmin .2vmin 0 mix($yellow, $black, 50%);
+  left: calc(50% - 13%);
+  top: calc(35% + 5vmin);
+}
+
+.moustache {
+  @include size(70%, 30%);
+  align-items: center;
+  animation: 14s ease-in-out infinite shake-moustache;
+  color: $white;
+  display: flex;
+  justify-content: center;
+  left: 15%;
+  position: absolute;
+  top: 57%;
+
+  &::after { /* left side */
+    @include size(15%);
+    background-color: currentColor;
+    border-radius: 5vmin 100%;
+    transform: rotateZ(45deg);
+    transform-origin: top center;
+  }
+
+  &::before { /* right side */
+    @include size(15%);
+    background-color: currentColor;
+    border-radius: 5vmin 100%;
+    transform: rotateZ(-45deg);
+    transform-origin: top center;
+  }
+
+  .center-hairs {
+    @include size(60%, 40%);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    .hair {
+      @include size(20%);
+      background-color: currentColor;
+      border-radius: 5vmin 100%;
+    }
+  }
+}
+
+.tongue {
+  @include size(18%, 22%);
+  animation: 14s ease-in-out infinite tongue-out;
+  background-color: $pink;
+  border-radius: 0 0 100% 100%;
+  left: calc(50% - 9%);
+  position: absolute;
+  top: 58%;
+  transform-origin: top center;
+
+  &::before { /* tongue line */
+  @include size(8%, 50%);
+    background-color: mix($pink, $black, 90%);
+    background-image: radial-gradient(ellipse farthest-corner, mix($pink, $black, 80%), $pink);
+    border-radius: 100%;
+    left: calc(50% - 4%);
+    top: 25%;
+  }
+}
+
+.terminals {
+  @include size(100%, 8%);
+  align-items: center;
+  bottom: 10%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+
+  %terminal {
+    @include size(15%);
+    background-image: linear-gradient(to bottom, $grey, $white, $grey);
+
+    &::before {
+      @include size(25%, 120%);
+      background-image: linear-gradient(to bottom, $grey, $white, $grey);
+      top: -10%;
+    }
+  }
+
+  .left {
+    @extend %terminal;
+    left: -15%;
+
+    &::before {
+      border-radius: 50% 0 0 50%;
+      box-shadow: inset -.4vmin 0 0 0 mix($grey, $black, 90%);
+      left: -25%;
+    }
+  }
+
+  .right {
+    @extend %terminal;
+    right: -15%;
+
+    &::before {
+      border-radius: 0 50% 50% 0;
+      box-shadow: inset .4vmin 0 0 0 mix($grey, $black, 90%);
+      right: -25%;
+    }
+  }
+}
+
+.head-shadow {
+    @include size(32vmin, 4vmin);
+    animation: 8s ease-in-out infinite shadow;
+    background-color: darken($dark-purple, 5%);
+    bottom: -20%;
+    border-radius: 100%;
+}
+
+.sign {
+  bottom: 1vmin;
+  color: $white;
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 2rem;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  width: 100vw;
+}
+
+
+/* Animation */
+
+@keyframes tongue-out {
+  0%, 2%, 19% { transform: translateY(0); }
+  4% { transform: translateY(75%); }
+  9% { transform: translateY(75%) rotateZ(25deg); }
+  14% { transform: translateY(75%) rotateZ(-25deg); }
+}
+
+@keyframes shake-moustache {
+  0%, 2%, 19% { transform: rotateZ(0); }
+  4%, 14% { transform: rotateZ(-2deg); }
+  9% { transform: rotateZ(2deg); }
+}
+
+@keyframes eyebrowns-game-left {
+  0%, 10%, 14%, 18% { transform: skew(-10deg) rotateZ(-10deg) translateX(-20%) translateY(0); }
+  12%, 16% { transform: skew(-10deg) rotateZ(-10deg) translateX(-20%) translateY(-30%); }
+}
+
+@keyframes eyebrowns-game-right {
+  0%, 10%, 14%, 18% { transform: skew(10deg) rotateZ(10deg) translateX(10%) translateY(0); }
+  12%, 16% { transform: skew(10deg) rotateZ(10deg) translateX(10%) translateY(-30%); }
+}
+
+@keyframes levitate {
+  0%, 50%, 100% { transform: translateY(3%); }
+  25%, 75% { transform: translateY(-3%) ;}
+}
+
+@keyframes shadow {
+  0%, 50%, 100% { transform: scale(1.05) rotateX(45deg); }
+  25%, 75% { transform: scale(.95) rotateX(45deg); }
+}

@@ -1,0 +1,34 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title Daily CSS Images Challenge - Day 16: Frank-Einstein's Monster
+    link(href='https://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet') 
+    link(rel='stylesheet' href='css/index.css')
+  body
+    .frank-einstein-monster
+      .head
+        .hair
+          .bangs
+        .staples
+          each staple in [1, 2, 3, 4]
+            div(class="staple staple" + staple)
+        .scar
+        .eyes
+          .left
+          .right
+        .ears
+        .tongue
+        .moustache
+          .center-hairs
+            each hair in [1, 2, 3, 4]
+              .hair
+        .nose
+        .terminals
+          .left
+          .right
+      .head-shadow
+    .sign e = m*c²
+      br
+      | (experiments = monstrous code squared)
