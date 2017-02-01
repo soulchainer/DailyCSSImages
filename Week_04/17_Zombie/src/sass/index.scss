@@ -1,0 +1,483 @@
+$black: #282828;
+$crystal: transparentize(#b5e0e0, .5);
+$pink: #ffa09b;
+$red: #e54b3f;
+$white: #eee;
+$yellow: #fed926;
+
+
+
+
+
+* {
+  box-sizing: border-box;
+  position: relative;
+
+  &::after,
+  &::before {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+  }
+}
+
+@mixin size($w: 100%, $h: 100%) {
+  height: $h;
+  width: $w;
+}
+
+body {
+  @include size(100vw, 100vh);
+  align-items: center;
+  background-color: $yellow;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.drink-it { /* Hidden input to trigger animation */
+  @include size(50vmin, 70vmin);
+  position: absolute;
+  opacity: 0;
+  z-index: 11;
+}
+
+.brain-milkshake {
+  @include size(50vmin, 70vmin);
+  align-items: center;
+  color: $yellow;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+@function stack-shadows($n, $offset-x: 0, $offset-y: 0, $color: currentColor) {
+  $shadows: ();
+  @for $i from 1 through $n {
+    $shadows: $shadows, $i * $offset-x $i * $offset-y 0 0 $color;
+  }
+
+  @return $shadows;
+}
+
+.glass {
+  @include size($h: 70%);
+  align-items: center;
+  color: $crystal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 10;
+
+  .stem {
+    @include size(10%, 5%);
+    background-color: currentColor;
+    bottom: -7.5%;
+    opacity: .7;
+  }
+
+  %foot-top-curve {
+    @include size(30%);
+    background-color: $yellow;
+  }
+
+  .foot-top {
+    @include size(40%, 25%);
+    background-color: currentColor;
+    bottom: -7.5%;
+    opacity: .7;
+
+    &::after { /* right curve of the stem */
+      @extend %foot-top-curve;
+      clip-path: ellipse(100% 100% at 100% 0%);
+      right: 0;
+    }
+
+    &::before { /* left curve of the stem */
+      @extend %foot-top-curve;
+      clip-path: ellipse(100% 100% at 0% 0%);
+    }
+  }
+
+  .foot {
+    @include size(70%, 10%);
+    background-color: currentColor;
+    border-radius: 100%;
+    box-shadow: stack-shadows(10, 0, .2vmin);
+    opacity: .7;
+    transform: rotateX(45deg);
+    transform-origin: bottom center;
+  }
+}
+
+%bowl-curve {
+  @include size(144%);
+  background-color: currentColor;
+}
+
+.bowl {
+  @include size(18%, 60%);
+  background-color: currentColor;
+  bottom: -7.5%;
+  opacity: .7;
+  
+
+  &::after { /* right curve of the bowl */
+    @extend %bowl-curve;
+    border-radius: 0 0 100% 0;
+    right: -144%;
+  }
+
+  &::before { /* left curve of the bowl */
+    @extend %bowl-curve;
+    border-radius: 0 0 0 100%;
+    left: -144%;
+  }
+}
+
+.shake {
+  &-container {
+    @include size($h: 70%);
+    overflow: hidden;
+    position: absolute;
+    transition: height .6s linear;
+  }
+
+  @include size(50vmin, 49vmin);
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+
+  .bowl {
+    background-image: linear-gradient(to bottom, $white, $white 15%, $pink 15%, $pink 50%, darken($pink, 20%) 95%, darken($pink, 40%));
+    top: -12.5%;
+
+    &::after,
+    &::before {
+      background-image: linear-gradient(to bottom, $white, $white 15%, $pink 15%, $pink 50%, darken($pink, 20%) 95%, darken($pink, 40%));
+    }
+  }
+}
+
+.straw { /* the straw container */
+  @include size(5%, 90%);
+  background-color: lighten($white, 100%);
+  background-image: repeating-linear-gradient(45deg, $red, $red 2vmin, transparent 2vmin, transparent 4vmin);
+  border-radius: .75vmin;
+  filter: blur(.1px);
+  left: calc(50% - 2.5%);
+  overflow: hidden;
+  position: absolute;
+  top: -15%;
+  transform: translateX(2vmin) rotateZ(-10deg);
+  transform-origin: bottom center;
+  z-index: -1;
+
+  &::after { /* the straw itself */
+    @include size;
+    background-color: transparentize(lighten($white, 100%), .5);
+    background-image: repeating-linear-gradient(45deg, $red, $red 2vmin, transparent 2vmin, transparent 4vmin);
+    border-radius: .75vmin;
+  }
+
+  &::before { /* shake inside the straw */
+    @include size($h: 50%);
+    background-color: $pink;
+    bottom: 0;
+    transition: height .6s linear;
+  }
+}
+
+.brain {
+  @include size(40%, 20%);
+  animation: 8s ease-in-out infinite float;
+  background-color: $pink;
+  left: calc(50% - 20%);
+  position: absolute;
+  top: 22%;
+  transition: top .4s linear .3s;
+  z-index: 5;
+
+  $border-color: mix($pink, $black, 80%);
+  $brain-border: .6vmin solid transparent;
+
+  .brain-curve {
+    background-color: $pink;
+    border: $brain-border;
+    border-radius: 100%;
+    position: absolute;
+
+    &-1 {
+      @include size(8vmin, 8vmin);
+      border-color: $border-color transparent transparent $border-color;
+      left: -1.4vmin;
+      top: -1.4vmin;
+    }
+
+    &-2 {
+      @include size(8vmin, 8vmin);
+      border-color: $border-color $border-color transparent transparent;
+      right: -1.4vmin;
+      top: -1.4vmin;
+    }
+
+    &-3 {
+      @include size(8vmin, 8vmin);
+      border-color: transparent transparent  $border-color $border-color;
+      left: -1.4vmin;
+      bottom: -1.4vmin;
+    }
+
+    &-4 {
+      @include size(8vmin, 8vmin);
+      border-color: transparent $border-color  $border-color transparent;
+      right: -1.4vmin;
+      bottom: -1.4vmin;
+    }
+
+    &-5 {
+      @include size(10vmin, 8vmin);
+      border-color: $border-color $border-color transparent $border-color;
+      left: calc(50% - 5vmin);
+      top: -1.4vmin;
+
+      &::before {
+        @extend .brain-curve;
+        @include size(10vmin, 10vmin);
+        border-color: $border-color transparent transparent transparent;
+        left: -5vmin;
+        top: .5vmin;
+      }
+
+      &::after {
+        @extend .brain-curve;
+        @include size(10vmin, 10vmin);
+        border-color: $border-color transparent transparent transparent;
+        right: -5vmin;
+        top: .5vmin;
+      }
+    }
+
+    &-6 {
+      @include size(10vmin, 8vmin);
+      border-color: transparent $border-color $border-color $border-color;
+      left: calc(50% - 5vmin);
+      bottom: -1.4vmin;
+
+      &::before {
+        @extend .brain-curve;
+        @include size(9vmin, 9vmin);
+        border-color: transparent transparent $border-color transparent;
+        left: -5vmin;
+        bottom: .6vmin;
+      }
+
+      &::after {
+        @extend .brain-curve;
+        @include size(9vmin, 9vmin);
+        border-color: transparent transparent $border-color transparent;
+        right: -5vmin;
+        bottom: .6vmin;
+      }
+    }
+
+    &-7 {
+      @include size(10vmin, 10vmin);
+      border-color: transparent transparent transparent $border-color;
+      left: -1vmin;
+      top: calc(50% - 5vmin);
+    }
+
+    &-8 {
+      @include size(10vmin, 10vmin);
+      border-color: transparent $border-color transparent transparent;
+      right: -1vmin;
+      top: calc(50% - 5vmin);
+    }
+  }
+
+  .face {
+    @include size(70%, 70%);
+    align-items: center;
+    color: mix($pink, $black, 10%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    left: calc(50% - 35%);
+    top: calc(50% - 35%);
+
+    .blush {
+      @include size(.8vmin, 40%);
+      background-color: currentColor;
+      box-shadow: stack-shadows(3, 1.6vmin, -.5vmin);
+      color: transparent;
+      left: 25%;
+      position: absolute;
+      top: 30%;
+      transform: rotateZ(15deg);
+      transform-origin: bottom center;
+    }
+
+    %normal-eye {
+      @include size(1.8vmin, 1.8vmin);
+      background-color: currentColor;
+      border-radius: 100%;
+      top: calc(50% - .9vmin);
+    }
+    
+    .eyes {
+      @include size(70%, 1.8vmin);
+      align-items: center;
+      animation: 4s infinite blink;
+      display: flex;
+      overflow: hidden;
+
+      &::after { /* eye right */
+        @extend %normal-eye;
+        right: 0;
+      }
+
+      &::before { /* eye left */
+        @extend %normal-eye;
+      }
+    }
+    .mouth {
+      @include size(2.4vmin, 2.4vmin);
+      border: .6vmin solid transparent;
+      border-color: transparent currentColor currentColor currentColor;
+      border-radius: 100%;
+      bottom: 1.2vmin;
+      left: calc(50% - 1.2vmin);
+      position: absolute;
+    }
+  }
+}
+
+%arm {
+    @include size(30%);
+    background-color: currentColor;
+    border-radius: .8vmin;
+    z-index: 11;
+
+    &::before { /* hand */
+      @include size(2vmin, 2vmin);
+      background-color: currentColor;
+      border-radius: 100%;
+    }
+  }
+
+.arms {
+  @include size(73%, .8vmin);
+  align-items: center;
+  color: mix($pink, $black, 10%);
+  display: flex;
+  justify-content: space-between;
+  left: calc(50% - 36.5%);
+  position: absolute;
+  top: 33.5%;
+  z-index: 4;
+
+  .arm-left {
+    @extend %arm;
+    transform: rotateZ(-20deg);
+    transform-origin: left center;
+    transition: transform .4s linear .3s;
+
+    &::before {
+      left: -1vmin;
+    }
+  }
+
+  .arm-right {
+    @extend %arm;
+    transform: rotateZ(20deg);
+    transform-origin: right center;
+    transition: transform .4s linear .3s;
+
+    &::before {
+      right: -1vmin;
+    }
+  }
+}
+
+
+/* Animation */
+
+.drink-it {
+  &:checked ~.brain-milkshake {
+    .straw::before { /* fill the straw with shake */
+      height: 100%;
+      transition: height 5s linear;
+    }
+
+    .shake-container { /* empty the bowl */
+        height: 25%;
+        transition: height 5s linear;
+    }
+
+    .brain {
+      animation: none;
+      top: 33%;
+      transition: top 1.4s linear 1.3s;
+    }
+
+    .blush {
+      color: mix($pink, $red, 50%);
+    }
+
+    %kimochi-eye {
+      @include size(2.4vmin, 2.4vmin);
+      border-radius: 0;
+      top: calc(50% - 1.2vmin);
+    }
+
+    .eyes { /* stop blinking and kimochi, kimochiii */
+      animation: none;
+      overflow: visible;
+
+      &::after { /* eye right */
+        @extend %kimochi-eye;
+        clip-path: polygon(100% 0%, 0% 34%, 0% 65%, 100% 100%, 100% 70%, 12% 51%, 12% 47%, 100% 25%);
+        right: 0;
+      }
+
+      &::before { /* eye left */
+        @extend %kimochi-eye;
+        clip-path: polygon(0% 0%, 100% 34%, 100% 65%, 0% 100%, 0 70%, 88% 51%, 88% 47%, 0 25%);
+      }
+    }
+
+    .mouth {
+      background-color: $red;
+      border: .6vmin solid currentColor;
+    }
+
+    .arm-left {
+      transform: rotateZ(35deg);
+      transition: transform 1.4s linear 1.3s;
+    }
+
+    .arm-right {
+      transform: rotateZ(-35deg);
+      transition: transform 1.4s linear 1.3s;
+    }
+  }
+}
+
+@keyframes float {
+  0%, 50%, 100% { transform: translateY(3%); }
+  25%, 75% { transform: translateY(-3%) ;}
+}
+
+@keyframes blink {
+  0%, 94%, 98% {
+    height: 1.8vmin;
+  }
+  96% {
+    height: .2rem;
+  }
+}

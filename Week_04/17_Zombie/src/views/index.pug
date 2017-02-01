@@ -1,0 +1,31 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title Daily CSS Images Challenge - Day 17: Zombie (Brain milkshake)
+    link(rel='stylesheet' href='css/index.css')
+  body
+    input.drink-it(type='checkbox')
+    .brain-milkshake
+      .glass
+        .bowl
+        .stem
+        .foot-top
+        .foot
+      .shake-container
+        .shake
+          .bowl
+      .straw
+      .brain
+        - let i = 1;
+        while i < 9
+          div(class=`brain-curve brain-curve-${i++}`)
+        .face
+          .blush
+          .eyes
+          .mouth
+
+      .arms
+        .arm-left
+        .arm-right
