@@ -1,0 +1,59 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title Daily CSS Images Challenge - Day 19-20: Monster of choice (Terri & Terry Perry, Monsters University)
+    link(rel='stylesheet' href='css/index.css')
+  body
+    .frame
+      .terri
+        .horn
+          - var horn_parts = 0;
+            while horn_parts < 6
+              .horn-part(class=`horn-part-${horn_parts++}`)
+
+        .head
+          .eye
+            .iris
+            .eyelid
+          .mouth
+            .inside
+              .upper-teeth
+                .incisor(class='incisor-left')
+                .incisor(class='incisor-right')
+                - let tooth = 1;
+                while tooth <6
+                  div(class=`tooth tooth${tooth++}`)
+        .neck
+        .sweatshirt-neck
+          .top
+          .center
+          .base
+      .terry
+        .horns
+          .horn(class='left')
+            - var e = 0;
+              while e < 56
+                .e(class=`e-${e++}`)
+          .horn(class='right')
+            - var e = 0;
+              while e < 56
+                .e(class=`e-${e++}`)
+        .head
+          .eye
+            .iris
+            .eyelid
+          .mouth
+            .upper-teeth
+              .incisor(class='incisor-right')
+              .incisor(class='incisor-left')
+            .lip
+        .neck
+          .neck-curve(class='left')
+          .neck-curve(class='right')
+        .sweatshirt-neck
+          .top
+          .center
+          .base
+    .sweatshirt
