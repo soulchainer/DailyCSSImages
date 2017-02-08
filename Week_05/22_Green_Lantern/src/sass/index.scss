@@ -1,0 +1,67 @@
+/*
+  In brightest day,
+  In blackest night,
+  No evil shall escape my sight,
+  Let those who worship evil's might,
+  Beware my power...Green Lantern's light!
+*/
+
+$border: #325b15;
+$center-green: #59872d;
+$left-green: #113904;
+$right-green: #2b5708;
+$ring: #336601;
+$top-green: #44790f;
+$white: #fefefe;
+
+* {
+  box-sizing: border-box;
+  position: relative;
+
+  &::after,
+  &::before {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+  }
+}
+
+@mixin size($w: 100%, $h: 100%) {
+  height: $h;
+  width: $w;
+}
+
+html {
+  @include size(100vw, 100vh);
+  align-items: center;
+  background-color: $top-green;
+  background-image: radial-gradient(100vmin at 50vw 50vh, transparentize(mix($center-green, $white, 30%), .85) 20vmin, transparent 28vmin), radial-gradient(400vh at 50vw -50vh, transparentize($white, .6), transparentize($white, .8) 10%, $center-green 15%, $left-green 50%, $right-green);
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  @include size(40vmin, 40vmin);
+  align-items: center;
+  background-color: $white;
+  border: .6vmin solid $border;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+
+  &::before {
+    @include size(55%, 55%);
+    border: 4vmin solid $ring;
+    border-radius: 100%;
+    top: calc(50% - 27.5%);
+  }
+
+  &::after {
+    @include size(55%, 12.5%);
+    background-color: $ring;
+    box-shadow: 0 22.2vmin 0 0 $ring;
+    top: 16%;
+  }
+}
