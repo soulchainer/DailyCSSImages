@@ -1,0 +1,27 @@
+{
+  "name": "codepen-offline",
+  "version": "0.1.0",
+  "description": "Script to do demo stuff like on Codepen offline",
+  "author": "Juan Riquelme <juanriqgon@tutanota.com>",
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "babel-preset-airbnb": "^2.1.1",
+    "browser-sync": "^2.18.5",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.8.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-clean-css": "^2.3.2",
+    "gulp-load-plugins": "^1.4.0",
+    "gulp-postcss": "^6.2.0",
+    "gulp-pug": "^3.2.0",
+    "gulp-sass": "^3.0.0",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-util": "^3.0.7",
+    "pug-lint": "^2.3.0"
+  }
+}

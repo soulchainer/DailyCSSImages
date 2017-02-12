@@ -1,0 +1,37 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title Daily CSS Images Challenge - Day 24: Iron Man
+    link(rel='stylesheet' href='css/index.css')
+  body
+    .ironman
+      .ears
+      .helmet
+        .eyebrowns-line
+        .eyes
+        .mouth
+        .helmet-outline
+      .upper-body
+        .left-arm
+          .shoulder
+          .arm
+        .trunk
+          .arc-reactor
+        .right-arm
+          .shoulder
+          .arm
+            .propulsion
+          .hand
+      .left-hand
+        each finger in [1, 2, 3, 4]
+          div(class=`finger-${finger}`)
+        .palm
+          .cannon
+      .pantsu
+      .legs
+        .left
+          .propulsion
+        .right
+          .propulsion
